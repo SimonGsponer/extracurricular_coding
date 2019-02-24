@@ -5,7 +5,7 @@ How many lines of python code are required to download the end-of-day stock pric
 
 Let's see how you can get this done:
 
-## Step 1: Get NASDAQ stock symbols
+## Step 1: Get NASDAQ Stock Symbols
 
 First of all, we need the stock symbol of every company that is listed on NASDAQ. For example, the stock symbol of `Apple` or `Facebook` is `APPL`/`FB` respectively. Since it is the 21st century, we would like to get this list without copy-pasting the stock symbols of every single company (of which there are more than 3000!). Luckily, NASDAQ publishes a `.txt` file that lists all quoted companies. [Click here to check it out yourself.](https://bit.ly/2U4x8r7) So how do we get this `.txt` file on our computer to make use of it later on? In short, we'll use the `ftp` module of `python 3` to extract the relevant information.
 
@@ -121,7 +121,7 @@ for index, nasdaq_stock in enumerate(nasdaq_dict):
 		print("Working on {}/{}" .format(index+1, len(nasdaq_dict)))
 ```
 
-### Moral of the story
+### Moral of the Story
 
 * One reason why I really like python is because it allows you to do things very quickly, using ~50 lines of code to download NASDAQ stock price data of the past 5 years empitomises this pretty weel.
 * While you can get a one-off pull of entire NASDAQ pretty easily, the true challenge is writing a script that automatically updates your stock data while handling events such as new companies getting listed on NASDAQ or companies being removed from the index. Moreover, the code above is not very pythonic in the way it's written, so you would also need to think about how you want to implement everything in an objective-oriented way. For this reason, my actual DIY fintech scripts have some additional lines of code ;)
