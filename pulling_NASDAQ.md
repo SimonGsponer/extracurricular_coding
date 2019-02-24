@@ -20,7 +20,7 @@ import urllib.request
 def parser(s):
 	'''
 	This function appends, for every line of the symbols txt file, the stock symbol
-	and name of the corresponding company to a list, defined on global level 
+	and name of the corresponding company to a list, defined globally 
 	(since ftp.retrlines does not accept arguments).
 	
 	Arguments:
