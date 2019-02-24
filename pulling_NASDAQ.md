@@ -54,11 +54,13 @@ Overall, the important part of this block of code is to define how every single 
 
 ## Step 2: Download Data
 
-Now, after having downloaded all stock symbols of NASDAQ, we'll need an API to download the actual stock data. Unfortunately, [quandl.com](https://www.quandl.com/) moved the NASDAQ API to their premium services, and the API of [Alpha Vantage](https://www.alphavantage.co/) has a daily API quota of 500 for non-paying users (at time of writing, it is Frugal February, so I can clearly not pay for an API :P ). Fortunately, there is also an API of [Investor Exchange](https://iextrading.com/); book-aholics among you may know this company from [Flash Boys](https://en.wikipedia.org/wiki/Flash_Boys). Fortunately, this company is not only 'the good guy' in the book, and their API is completely free, does not require registration, and does not impose strict API quota.
+Now, after having downloaded all stock symbols of NASDAQ, we'll need an API to download the actual stock data. Unfortunately, <a href="https://www.quandl.com/" target="_blank">quandl.com</>moved the NASDAQ API to their premium services, and the API of <a href="https://www.alphavantage.co/" target="_blank">Alpha Vantage</> has a daily API quota of 500 for non-paying users (at time of writing, it is Frugal February, so I can clearly not pay for an API :P ). Fortunately, there is also an API of <a href="https://iextrading.com/" target="_blank">Investor Exchange</a>; book-aholics amongst you may know this company from <a href="https://en.wikipedia.org/wiki/Flash_Boys" target="_blank">Flash Boys</a>. Fortunately, this company is not only 'the good guy' in the book, and their API is completely free, does not require registration, and does not impose strict API quota.
 
 Therefore, we can now simply iterate over the cached stock symbols we downloaded before, and retrieve the end-of-year stock prices for the past 5 years. (This is probably the only drawback of the IEX API, it only allows you to pull info from the past 5 years. If you want to get the entire timeline, the next-best free alternative is to use the API of Alpha Vantage and run it for 1 week).
 
-To pull data from the IEX API, you just need to combine `https://api.iextrading.com/1.0/stock/` + **your stock symbol** + `/chart/5y`. [Click here to get the stock data for Apple](`https://api.iextrading.com/1.0/stock/AAPL/chart/5y`). The code below saves all stock data as `.csv` files in the folder `stockdata`, using the stock symbol as the filename.
+To pull data from the IEX API, you just need to combine `https://api.iextrading.com/1.0/stock/` + **your stock symbol** + `/chart/5y`.
+<a href="https://api.iextrading.com/1.0/stock/AAPL/chart/5y" target="_blank">Click here to get the stock data for Apple.</a>
+The code below saves all stock data as `.csv` files in the folder `stockdata`, using the stock symbol as the filename.
 
 
 ``` Python
