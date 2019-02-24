@@ -38,10 +38,10 @@ def parser(s):
 		symbol = general_split.split("|")[0]
 		company_name = general_split.split("|")[1]
 		### global var as callback in ftp.retrlines does not accept arguments
-		nasdaq_dict.append({'symbol': symbol, 'name': company_name})
+		nasdaq_list.append({'symbol': symbol, 'name': company_name})
 
 #define empty dictionary, global variable used in parser()
-nasdaq_dict = []
+nasdaq_list = []
 
 #execute FTP request
 ftp = FTP("ftp.nasdaqtrader.com")
@@ -50,7 +50,7 @@ ftp.retrlines("RETR /symboldirectory/nasdaqlisted.txt", callback=parser)
 ftp.quit()
 ```
 
-Overall, the important part of this block of code is to define how every line of the `.txt` file should be read in, which I've defined in `parser(s)`. This function basically extracts, for example, from `ABIO|ARCA biopharma, Inc. - Common Stock|S|N|D|100|N|N` the stock symbol `ABIO` and the company name `ARCA biopharma, Inc.` This information is saved in a python dictionary (which is, more or less, a `JSON`-like object).
+Overall, the important part of this block of code is to define how every line of the `.txt` file should be read in, which I've defined in `parser(s)`. This function basically extracts, for example, from `ABIO|ARCA biopharma, Inc. - Common Stock|S|N|D|100|N|N` the stock symbol `ABIO` and the company name `ARCA biopharma, Inc.` This information is saved as python dictionaries in a list, which is, more or less, a `JSON`-like object.
 
 ## Step 2: Download Data
 
@@ -63,7 +63,7 @@ The code below saves all stock data as `.csv` files in the folder `stockdata`, u
 
 
 ``` Python
-#iterate over each element of stock symbol dictionary, 
+#iterate over each element of stock symbol list, 
 #and dump 5-year end-of-day stock prices in the folder 'stockdata'
 import os
 import json
@@ -107,7 +107,7 @@ url_prefix = "https://api.iextrading.com/1.0/stock/"
 url_suffix = "/chart/5y"
 
 #for every nasday stock symbol that was cached
-for index, nasdaq_stock in enumerate(nasdaq_dict):
+for index, nasdaq_stock in enumerate(nasdaq_list):
 	# retrieve symbol
 	stock_symbol = nasdaq_stock['symbol']
 	#build url
@@ -118,7 +118,7 @@ for index, nasdaq_stock in enumerate(nasdaq_dict):
 	#since it takes a while to pull data of > 3000 stocks, 
 	#a progress update wouldn't hurt
 	if index % 100 == 0:
-		print("Working on {}/{}" .format(index+1, len(nasdaq_dict)))
+		print("Working on {}/{}" .format(index+1, len(nasdaq_list)))
 ```
 
 ### Moral of the Story
