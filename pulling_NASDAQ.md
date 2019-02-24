@@ -7,7 +7,7 @@ Let's see how you can get this done:
 
 ## Step 1: Get NASDAQ stock symbols
 
-First of all, we need the stock symbol of every company that is listed on NASDAQ. For example, the stock symbol of `Apple` or `Facebook` is `APPL`/`FB` respectively. Since it is the 21st century, we would like to get this list without copy-pasting the stock symbols of every single company (of which there are more than 3000!). Luckily, NASDAQ publishes a `.txt` file lists all quoted companies. [Click here to check it out yourself.](https://bit.ly/2U4x8r7) So how do we get this `.txt` file on our computer to make use of it later on? In short, we'll use the `ftp` module of `python 3` to extract the relevant information.
+First of all, we need the stock symbol of every company that is listed on NASDAQ. For example, the stock symbol of `Apple` or `Facebook` is `APPL`/`FB` respectively. Since it is the 21st century, we would like to get this list without copy-pasting the stock symbols of every single company (of which there are more than 3000!). Luckily, NASDAQ publishes a `.txt` file that lists all quoted companies. [Click here to check it out yourself.](https://bit.ly/2U4x8r7) So how do we get this `.txt` file on our computer to make use of it later on? In short, we'll use the `ftp` module of `python 3` to extract the relevant information.
 
 ``` Python
 ### get all stock symbols of NASDAQ
@@ -50,16 +50,16 @@ ftp.retrlines("RETR /symboldirectory/nasdaqlisted.txt", callback=parser)
 ftp.quit()
 ```
 
-Overall, the important part of this block of code is to define how every single line of the `.txt` file should be read in, which I've defined in `parser(s)`. This function basically extracts, for example, from `ABIO|ARCA biopharma, Inc. - Common Stock|S|N|D|100|N|N` the stock symbol `ABIO` and the company name `ARCA biopharma, Inc.` This information is saved in a python dictionary, which is, more or less, a `JSON`-like object.
+Overall, the important part of this block of code is to define how every line of the `.txt` file should be read in, which I've defined in `parser(s)`. This function basically extracts, for example, from `ABIO|ARCA biopharma, Inc. - Common Stock|S|N|D|100|N|N` the stock symbol `ABIO` and the company name `ARCA biopharma, Inc.` This information is saved in a python dictionary (which is, more or less, a `JSON`-like object).
 
 ## Step 2: Download Data
 
 Now, after having downloaded all stock symbols of NASDAQ, we'll need an API to download the actual stock data. Unfortunately, [quandl.com](https://www.quandl.com/) moved the NASDAQ API to their premium services, and the API of [Alpha Vantage](https://www.alphavantage.co/) has a daily API quota of 500 calls for non-paying users (at time of writing, it is Frugal February, so I can clearly not pay for an API 😛). Fortunately, there is also an API of [Investors Exchange](https://iextrading.com/); book-aholics amongst you may know this company from [Flash Boys](https://en.wikipedia.org/wiki/Flash_Boys). Fortunately, this company is not only 'the good guy' in the book, and their API is completely free, does not require registration, and does not impose strict API quota.
 
-Therefore, we can now simply iterate over the cached stock symbols we downloaded before, and retrieve the end-of-year stock prices for the past 5 years. (This is the only drawback of the IEX API; it only allows you to pull info from the past 5 years.)
+Therefore, we can now simply iterate over the cached stock symbols we downloaded before, and retrieve the end-of-day stock prices of the past 5 years. (This is the only drawback of the IEX API; it only allows you to pull info from the past 5 years.)
 
-To pull data from the IEX API, you just need to combine `https://api.iextrading.com/1.0/stock/` + **your stock symbol** + `/chart/5y`.
-[Click here to get the stock data for Apple.](https://api.iextrading.com/1.0/stock/AAPL/chart/5y) The code below saves all stock data as `.csv` files in the folder `stockdata`, using the stock symbol as the filename.
+To pull data from the IEX API, you just need to combine `https://api.iextrading.com/1.0/stock/` + **your stock symbol** + `/chart/5y`. Hence, you can get Apple's stock by copy-pasting `https://api.iextrading.com/1.0/stock/AAPL/chart/5y`in your browser bar—try it yourself!
+The code below saves all stock data as `.csv` files in the folder `stockdata`, using the stock symbol as the filename.
 
 
 ``` Python
@@ -121,5 +121,5 @@ for index, nasdaq_stock in enumerate(nasdaq_dict):
 
 ### Moral of the story
 
-* One reason why I really like python is that it allows you to do things very quickly, using ~50 lines of code to download NASDAQ stock price data of the past 5 years empitomises this pretty weel.
+* One reason why I really like python is because it allows you to do things very quickly, using ~50 lines of code to download NASDAQ stock price data of the past 5 years empitomises this pretty weel.
 * While you can get a one-off pull of entire NASDAQ pretty easyily, the true challenge is writing a script that automatically updates your stock data while handling events such as new companies getting listed on NASDAQ or companies being removed from the index. Moreover, the code above is not very pythonic in the way it's written, so you would also need to think about how you want to implement everything in an objective-oriented way. For this reason, my actual DIY fintech scripts have some additional lines of code ;)
