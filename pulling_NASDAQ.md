@@ -58,7 +58,7 @@ Now, after having downloaded all stock symbols of NASDAQ, we'll need an API to d
 
 Therefore, we can now simply iterate over the cached stock symbols we downloaded before, and retrieve the end-of-day stock prices of the past 5 years. (This is the only drawback of the IEX API; it only allows you to pull info from the past 5 years.)
 
-To pull data from the IEX API, you just need to combine `https://api.iextrading.com/1.0/stock/` + **your stock symbol** + `/chart/5y`. Hence, you can get Apple's stock by copy-pasting `https://api.iextrading.com/1.0/stock/AAPL/chart/5y`in your browser bar—try it yourself!
+To pull data from the IEX API, you just need to combine `https://api.iextrading.com/1.0/stock/` + **your stock symbol** + `/chart/5y`. Hence, you can get Apple's stock by copy-pasting `https://api.iextrading.com/1.0/stock/AAPL/chart/5y` into your browser bar—try it yourself!
 The code below saves all stock data as `.csv` files in the folder `stockdata`, using the stock symbol as the filename.
 
 
