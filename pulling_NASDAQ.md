@@ -7,7 +7,7 @@ Let's see how you can get this done:
 
 ## Step 1: Get NASDAQ stock symbols
 
-First of all, we need the stock symbol of every company that is listed on NASDAQ. For example, the stock symbol of `Apple` or `Facebook` is `APPL`/`FB` respectively. Since it is the 21st century, we would like to get this list without copy-pasting the stock symbols of every single company (of which there are more than 3000!). Luckily, NASDAQ publishes a `.txt` file lists all quoted companies. <a href="ftp://ftp.nasdaqtrader.com/symboldirectory/nasdaqlisted.txt" target="_blank">Click here to check it out yourself.</a> So how do we get this `.txt` file on our computer to make use of it later on? In short, we'll use the `ftp` module of `python 3` to extract the relevant information.
+First of all, we need the stock symbol of every company that is listed on NASDAQ. For example, the stock symbol of `Apple` or `Facebook` is `APPL`/`FB` respectively. Since it is the 21st century, we would like to get this list without copy-pasting the stock symbols of every single company (of which there are more than 3000!). Luckily, NASDAQ publishes a `.txt` file lists all quoted companies. [Click here to check it out yourself.](ftp://ftp.nasdaqtrader.com/symboldirectory/nasdaqlisted.txt){:target="_blank"} So how do we get this `.txt` file on our computer to make use of it later on? In short, we'll use the `ftp` module of `python 3` to extract the relevant information.
 
 ``` Python
 ### get all stock symbols of NASDAQ
