@@ -38,7 +38,7 @@ def parser(s):
 		general_split = s.split(" - ", )[0]
 		symbol = general_split.split("|")[0]
 		company_name = general_split.split("|")[1]
-		# global var as callback in ftp.retrlines does not accept arguments
+		# global var, as callback in ftp.retrlines does not accept arguments
 		nasdaq_list.append({'symbol': symbol, 'name': company_name})
 	return None
 	
