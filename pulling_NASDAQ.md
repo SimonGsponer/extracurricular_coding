@@ -19,8 +19,9 @@ import urllib.request
 #define how every line of txt file should be parsed
 def parser(s):
 	'''
-	This function returns, for every line of the symbols txt file, the stock symbol
-	and name of the corresponding company.
+	This function appends, for every line of the symbols txt file, the stock symbol
+	and name of the corresponding company to a list, defined on global level 
+	(since ftp.retrlines does not accept arguments).
 	
 	Arguments:
 	----------
@@ -28,7 +29,7 @@ def parser(s):
 	
 	Returns:
 	--------
-	Python dictionary with stock symbol and company name
+	None
 	'''
 	### do not load data of test stocks
 	if "Symbol" in s or "NASDAQ TEST STOCK" in s or "File Creation Time" in s or "Pilot Test" in s:
@@ -39,8 +40,9 @@ def parser(s):
 		company_name = general_split.split("|")[1]
 		### global var as callback in ftp.retrlines does not accept arguments
 		nasdaq_list.append({'symbol': symbol, 'name': company_name})
-
-#define empty dictionary, global variable used in parser()
+	return None
+	
+#define empty list, global variable used in parser()
 nasdaq_list = []
 
 #execute FTP request
