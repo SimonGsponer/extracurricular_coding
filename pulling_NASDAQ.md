@@ -65,6 +65,8 @@ The code below saves all stock data as `.csv` files in the folder `stockdata`, u
 ``` Python
 #iterate over each element of stock symbol dictionary, 
 #and dump 5-year end-of-day stock prices in the folder 'stockdata'
+import os
+import json
 
 def stock_pull(stock_symbol, link, target_folder):
 	'''
