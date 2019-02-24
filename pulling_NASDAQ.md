@@ -12,11 +12,11 @@ First of all, we need the stock symbol of every company that is listed on NASDAQ
 ``` Python
 ### get all stock symbols of NASDAQ
 
-#load relevant modules
+# load relevant modules
 from ftplib import FTP
 import urllib.request
 
-#define how every line of txt file should be parsed
+# define how every line of NASDAQ stock symbols .txt file should be parsed
 def parser(s):
 	'''
 	This function appends, for every line of the symbols txt file, the stock symbol
@@ -31,21 +31,21 @@ def parser(s):
 	--------
 	None
 	'''
-	### do not load data of test stocks
+	# do not load data of test stocks
 	if "Symbol" in s or "NASDAQ TEST STOCK" in s or "File Creation Time" in s or "Pilot Test" in s:
 		pass
 	else:
 		general_split = s.split(" - ", )[0]
 		symbol = general_split.split("|")[0]
 		company_name = general_split.split("|")[1]
-		### global var as callback in ftp.retrlines does not accept arguments
+		# global var as callback in ftp.retrlines does not accept arguments
 		nasdaq_list.append({'symbol': symbol, 'name': company_name})
 	return None
 	
-#define empty list, global variable used in parser()
+# define empty list, global variable used in parser()
 nasdaq_list = []
 
-#execute FTP request
+# execute FTP request
 ftp = FTP("ftp.nasdaqtrader.com")
 ftp.login()
 ftp.retrlines("RETR /symboldirectory/nasdaqlisted.txt", callback=parser)
@@ -65,8 +65,8 @@ The code below saves all stock data as `.csv` files in the folder `stockdata`, u
 
 
 ``` Python
-#iterate over each element of stock symbol list, 
-#and dump 5-year end-of-day stock prices in the folder 'stockdata'
+### iterate over each element of stock symbol list, 
+### and dump 5-year end-of-day stock prices in the folder 'stockdata'
 import os
 import json
 
@@ -91,34 +91,34 @@ def stock_pull(stock_symbol, link, target_folder):
 	import urllib.request
 	import pandas as pd
 	
-	#download file from url
+	# download file from url
 	with urllib.request.urlopen(link) as url:
 		data = json.loads(url.read().decode())
-	#convert into pandas dataframe
+	# convert into pandas dataframe
 	df = pd.DataFrame(data)
-	#save file, don't save numeric index
+	# save file, don't save numeric index
 	filepath = os.path.join(target_folder, stock_symbol + ".csv")
 	with open(filepath, 'w') as f:
 		df.to_csv(f, index = False)
 		
 	return None
 
-### define some parameters for subsequent loop
+# define some parameters for subsequent loop
 target_folder = "stockdata"
 url_prefix = "https://api.iextrading.com/1.0/stock/"
 url_suffix = "/chart/5y"
 
-#for every nasday stock symbol that was cached
+# for every nasday stock symbol that was cached…
 for index, nasdaq_stock in enumerate(nasdaq_list):
 	# retrieve symbol
 	stock_symbol = nasdaq_stock['symbol']
-	#build url
+	# build url
 	url = url_prefix + stock_symbol + url_suffix
-	#call function
+	# call function
 	stock_pull(stock_symbol = stock_symbol, link = url, target_folder = target_folder)
 	
-	#since it takes a while to pull data of > 3000 stocks, 
-	#a progress update wouldn't hurt
+	# since it takes a while to pull data of > 3000 stocks, 
+	# a progress update wouldn't hurt
 	if index % 100 == 0:
 		print("Working on {}/{}" .format(index+1, len(nasdaq_list)))
 ```
