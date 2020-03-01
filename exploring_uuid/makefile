@@ -2,4 +2,4 @@ folder-structure:
 	mkdir logs
 
 run:
-	python exploring_uuid.py
+	python3 exploring_uuid.py
